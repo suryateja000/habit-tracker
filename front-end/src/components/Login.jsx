@@ -1,6 +1,6 @@
 // src/components/Login.jsx
 import { useState } from 'react';
-import { login } from '../api';
+import { login } from '../Api';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function Login({ switchToRegister }) {
@@ -19,9 +19,14 @@ export default function Login({ switchToRegister }) {
     setLoading(true);
 
     try {
+      console.log('Attempting login with:', formData.username);
       const response = await login(formData.username, formData.password);
+      console.log('Login response:', response);
+      
       loginUser(response);
+      console.log('Token saved, should redirect to dashboard');
     } catch (err) {
+      console.error('Login error:', err);
       setError(err.message);
     } finally {
       setLoading(false);

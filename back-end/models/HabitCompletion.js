@@ -13,14 +13,14 @@ const habitCompletionSchema = new mongoose.Schema({
     required: true
   },
   date: {
-    type: Date,
+    type: String, // Store as YYYY-MM-DD format
     required: true
   },
-  status: {
-    type: String,
-    enum: ['completed', 'missed', 'skipped'],
-    required: true
+  completed: {
+    type: Boolean,
+    default: true
   }
+  // Remove the 'status' field since we're using 'completed' instead
 }, {
   timestamps: true
 });

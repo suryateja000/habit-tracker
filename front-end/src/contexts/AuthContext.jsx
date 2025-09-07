@@ -1,6 +1,6 @@
 // src/contexts/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getMe } from '../api';
+import { getMe } from '../Api';
 
 const AuthContext = createContext({});
 
@@ -12,22 +12,33 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (token) {
-      getMe(token)
-        .then(setUser)
-        .catch(() => {
-          localStorage.removeItem('token');
-          setToken(null);
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
-    }
+    const checkAuth = async () => {
+      if (!token) {
+        setLoading(false);
+        setUser(null);
+        return;
+      }
+
+      try {
+        const userData = await getMe(token);
+        setUser(userData);
+      } catch (error) {
+        console.error('Auth check failed:', error);
+        localStorage.removeItem('token');
+        setToken(null);
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
   }, [token]);
 
   const loginUser = (tokenData) => {
-    localStorage.setItem('token', tokenData.access_token);
-    setToken(tokenData.access_token);
+    const accessToken = tokenData.access_token;
+    localStorage.setItem('token', accessToken);
+    setToken(accessToken);
   };
 
   const logout = () => {
@@ -43,7 +54,7 @@ export const AuthProvider = ({ children }) => {
       loading,
       loginUser,
       logout,
-      isAuthenticated: !!user
+      isAuthenticated: !!user && !!token
     }}>
       {children}
     </AuthContext.Provider>

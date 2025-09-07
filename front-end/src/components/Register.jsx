@@ -1,6 +1,6 @@
 // src/components/Register.jsx
 import { useState } from 'react';
-import { register } from '../api';
+import { register } from '../Api';
 
 export default function Register({ switchToLogin }) {
   const [formData, setFormData] = useState({

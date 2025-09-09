@@ -18,7 +18,7 @@ const startServer = async () => {
   const collections = await mongoose.connection.db.listCollections().toArray();
 
   app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000'],
+    origin: ['http://localhost:5173', 'http://localhost:3000', 'https://habit-tracker0.netlify.app'],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization']

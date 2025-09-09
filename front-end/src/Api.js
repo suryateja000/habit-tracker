@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://habit-tracker-gx4l.onrender.com/api';
 
 const getAuthToken = () => localStorage.getItem('token');
 

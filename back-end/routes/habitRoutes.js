@@ -1,14 +1,26 @@
 // routes/habitRoutes.js
-import { Router } from 'express';
-import { getUserHabits, createHabit, toggleHabitCompletion, deleteHabit } from '../controllers/habitController.js';
-import { requireAuth } from '../middleware/authMiddleware.js';
+import express from 'express';
+import {
+  getHabits,
+  createHabit,
+  updateHabit,
+  deleteHabit,
+  toggleHabitCompletion
+} from '../controllers/habitController.js';
+import { protect } from '../middleware/auth.js';
 
-const router = Router();
+const router = express.Router();
 
-router.use(requireAuth);
-router.get('/', getUserHabits);
-router.post('/', createHabit);
-router.patch('/:habitId/toggle', toggleHabitCompletion);
-router.delete('/:habitId', deleteHabit);
+router.use(protect);
+
+router.route('/')
+  .get(getHabits)
+  .post(createHabit);
+
+router.route('/:id')
+  .put(updateHabit)
+  .delete(deleteHabit);
+
+router.post('/:id/toggle', toggleHabitCompletion);
 
 export default router;

@@ -1,61 +1,76 @@
-// src/contexts/AuthContext.jsx
-import { createContext, useContext, useState, useEffect } from 'react';
-import { getMe } from '../Api';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { login as apiLogin, register as apiRegister } from '../Api';
 
-const AuthContext = createContext({});
+const AuthContext = createContext();
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(() => localStorage.getItem('token'));
+  const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      if (!token) {
-        setLoading(false);
-        setUser(null);
-        return;
-      }
+    const storedToken = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('user');
 
-      try {
-        const userData = await getMe(token);
-        setUser(userData);
-      } catch (error) {
-        console.error('Auth check failed:', error);
-        localStorage.removeItem('token');
-        setToken(null);
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (storedToken && storedUser) {
+      setToken(storedToken);
+      setUser(JSON.parse(storedUser));
+    }
 
-    checkAuth();
-  }, [token]);
+    setLoading(false);
+  }, []);
 
-  const loginUser = (tokenData) => {
-    const accessToken = tokenData.access_token;
-    localStorage.setItem('token', accessToken);
-    setToken(accessToken);
+  const login = async (username, password) => {
+    const response = await apiLogin(username, password);
+    const { token: newToken, user: newUser } = response;
+
+    setToken(newToken);
+    setUser(newUser);
+    localStorage.setItem('token', newToken);
+    localStorage.setItem('user', JSON.stringify(newUser));
+
+    return response;
+  };
+
+  const register = async (username, email, password) => {
+    const response = await apiRegister(username, email, password);
+    const { token: newToken, user: newUser } = response;
+
+    setToken(newToken);
+    setUser(newUser);
+    localStorage.setItem('token', newToken);
+    localStorage.setItem('user', JSON.stringify(newUser));
+
+    return response;
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
     setUser(null);
+    setToken(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  };
+
+  const value = {
+    user,
+    token,
+    login,
+    register,
+    logout,
+    isAuthenticated: !!token && !!user,
+    loading
   };
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      token,
-      loading,
-      loginUser,
-      logout,
-      isAuthenticated: !!user && !!token
-    }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

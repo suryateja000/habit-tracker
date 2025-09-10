@@ -1,4 +1,4 @@
-// routes/habitRoutes.js
+
 import express from 'express';
 import {
   getHabits,

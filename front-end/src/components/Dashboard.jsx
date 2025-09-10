@@ -482,272 +482,261 @@ export default function Dashboard() {
         </div>
       </main>
       {showFollowersModal && (
-        <div className="fixed inset-0 bg-violet-50 backdrop-blur-md flex items-center justify-center z-50 p-4">
-  <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden border border-violet-100">
-    {/* Header with solid violet background */}
-    <div className="p-8 bg-violet-500">
-      <div className="flex justify-between items-center text-white">
-        <div>
-          <h3 className="text-3xl font-bold mb-2">My Friends</h3>
-          <p className="text-lg text-white text-opacity-90">{friends.length} friends following your journey</p>
-        </div>
-        <button 
-          onClick={() => setShowFollowersModal(false)}
-          className="text-white hover:bg-white hover:bg-opacity-20 p-3 rounded-full transition-all duration-300"
-        >
-          <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-    </div>
-    
-    <div className="p-6 bg-white overflow-y-auto max-h-96 custom-scrollbar">
-      {friends.length === 0 ? (
-        <div className="text-center py-16">
-          <div className="relative mb-8">
-            <div className="w-24 h-24 mx-auto bg-violet-100 rounded-2xl flex items-center justify-center border-2 border-violet-200">
-              <svg className="w-12 h-12 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
+        <div className="fixed inset-0 bg-violet-50 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4">
+          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-2xl lg:max-w-3xl max-h-[90vh] sm:max-h-[85vh] overflow-hidden border border-violet-100">
+            <div className="p-4 sm:p-6 lg:p-8 bg-violet-500">
+              <div className="flex justify-between items-center text-white">
+                <div>
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">My Friends</h3>
+                  <p className="text-sm sm:text-base lg:text-lg text-white text-opacity-90">{friends.length} friends following your journey</p>
+                </div>
+                <button 
+                  onClick={() => setShowFollowersModal(false)}
+                  className="text-white hover:bg-white hover:bg-opacity-20 p-2 sm:p-3 rounded-full transition-all duration-300"
+                >
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
             </div>
-            <div className="absolute top-4 left-1/2 transform -translate-x-8">
-              <div className="w-3 h-3 bg-violet-400 rounded-full"></div>
-            </div>
-            <div className="absolute top-8 right-1/2 transform translate-x-8">
-              <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-            </div>
-          </div>
-          <h4 className="text-2xl font-bold text-violet-800 mb-3">No friends yet</h4>
-          <p className="text-lg text-violet-600 mb-8 max-w-md mx-auto">Start connecting with other habit builders!</p>
-          <button
-            onClick={() => {
-              setShowFollowersModal(false);
-              setShowAddFriendsModal(true);
-            }}
-            className="px-8 py-3 rounded-xl font-bold text-white transition-colors bg-violet-500 hover:bg-violet-600"
-          >
-            Find Friends
-          </button>
-        </div>
-      ) : (
-        <div className="grid gap-4">
-          {friends.map(friend => {
-            // Simple solid colors for avatars
-            const photoColors = [
-              'bg-violet-400',
-              'bg-indigo-400',
-              'bg-purple-400',
-              'bg-fuchsia-400',
-              'bg-pink-400',
-              'bg-blue-400'
-            ];
-            const randomColor = photoColors[Math.abs(friend._id.charCodeAt(0)) % photoColors.length];
             
-            return (
-              <div key={friend._id} className="group bg-white rounded-2xl border-2 border-violet-100 hover:border-violet-300 hover:shadow-xl transition-all duration-300 overflow-hidden">
-                <div className="flex items-center p-6">
-                  {/* Simple avatar */}
-                  <div className="relative mr-6">
-                    <div className={`w-20 h-20 rounded-2xl ${randomColor} flex items-center justify-center shadow-lg`}>
-                      <span className="text-white font-bold text-2xl">
-                        {friend.username.charAt(0).toUpperCase()}
-                      </span>
+            <div className="p-3 sm:p-4 lg:p-6 bg-white overflow-y-auto max-h-60 sm:max-h-80 lg:max-h-96 custom-scrollbar">
+              {friends.length === 0 ? (
+                <div className="text-center py-8 sm:py-12 lg:py-16">
+                  <div className="relative mb-4 sm:mb-6 lg:mb-8">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto bg-violet-100 rounded-xl sm:rounded-2xl flex items-center justify-center border-2 border-violet-200">
+                      <svg className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                      </svg>
                     </div>
-                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-violet-400 border-3 border-white rounded-full"></div>
-                  </div>
-                  
-                  {/* User info */}
-                  <div className="flex-1">
-                    <h4 className="text-xl font-bold text-gray-900 mb-1 group-hover:text-violet-600 transition-colors">
-                      {friend.username}
-                    </h4>
-                    <p className="text-violet-500 text-base mb-2">{friend.email}</p>
-                    
-                    {/* Simple decorative elements */}
-                    <div className="flex space-x-1 mt-2">
-                      <div className="w-2 h-2 bg-violet-300 rounded-full opacity-60"></div>
-                      <div className="w-2 h-2 bg-purple-300 rounded-full opacity-40"></div>
-                      <div className="w-2 h-2 bg-fuchsia-300 rounded-full opacity-50"></div>
+                    <div className="absolute top-2 sm:top-4 left-1/2 transform -translate-x-6 sm:-translate-x-8">
+                      <div className="w-2 h-2 sm:w-3 sm:h-3 bg-violet-400 rounded-full"></div>
+                    </div>
+                    <div className="absolute top-4 sm:top-8 right-1/2 transform translate-x-6 sm:translate-x-8">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-400 rounded-full"></div>
                     </div>
                   </div>
-                  
-                  {/* Unfollow button */}
+                  <h4 className="text-lg sm:text-xl lg:text-2xl font-bold text-violet-800 mb-2 sm:mb-3">No friends yet</h4>
+                  <p className="text-sm sm:text-base lg:text-lg text-violet-600 mb-4 sm:mb-6 lg:mb-8 max-w-xs sm:max-w-md mx-auto px-4">Start connecting with other habit builders!</p>
                   <button
-                    onClick={() => handleUnfollowUser(friend._id)}
-                    disabled={actionLoading[friend._id]}
-                    className="px-8 py-3 rounded-xl font-bold transition-colors disabled:opacity-50 bg-red-500 hover:bg-red-600 text-white"
+                    onClick={() => {
+                      setShowFollowersModal(false);
+                      setShowAddFriendsModal(true);
+                    }}
+                    className="px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5 lg:py-3 rounded-lg sm:rounded-xl font-bold text-white transition-colors bg-violet-500 hover:bg-violet-600 text-sm sm:text-base"
                   >
-                    {actionLoading[friend._id] ? 'Removing...' : 'Unfollow'}
+                    Find Friends
                   </button>
                 </div>
-              </div>
-            );
-          })}
+              ) : (
+                <div className="grid gap-2 sm:gap-3 lg:gap-4">
+                  {friends.map(friend => {
+                    const photoColors = [
+                      'bg-violet-400',
+                      'bg-indigo-400',
+                      'bg-purple-400',
+                      'bg-fuchsia-400',
+                      'bg-pink-400',
+                      'bg-blue-400'
+                    ];
+                    const randomColor = photoColors[Math.abs(friend._id.charCodeAt(0)) % photoColors.length];
+                    
+                    return (
+                      <div key={friend._id} className="group bg-white rounded-xl sm:rounded-2xl border-2 border-violet-100 hover:border-violet-300 hover:shadow-xl transition-all duration-300 overflow-hidden">
+                        <div className="flex items-center p-3 sm:p-4 lg:p-6 space-x-3 sm:space-x-4 lg:space-x-6">
+                          <div className="relative flex-shrink-0">
+                            <div className={`w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-xl sm:rounded-2xl ${randomColor} flex items-center justify-center shadow-lg`}>
+                              <span className="text-white font-bold text-sm sm:text-lg lg:text-2xl">
+                                {friend.username.charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                            <div className="absolute -bottom-0.5 -right-0.5 sm:-bottom-1 sm:-right-1 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 bg-violet-400 border-2 sm:border-3 border-white rounded-full"></div>
+                          </div>
+                          
+                          <div className="flex-1 min-w-0">
+                            <h4 className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900 mb-0.5 sm:mb-1 group-hover:text-violet-600 transition-colors truncate">
+                              {friend.username}
+                            </h4>
+                            <p className="text-xs sm:text-sm lg:text-base text-violet-500 mb-1 sm:mb-2 truncate">{friend.email}</p>
+                            
+                            <div className="flex space-x-1 mt-1 sm:mt-2">
+                              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-violet-300 rounded-full opacity-60"></div>
+                              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-300 rounded-full opacity-40"></div>
+                              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-fuchsia-300 rounded-full opacity-50"></div>
+                            </div>
+                          </div>
+                          
+                          <button
+                            onClick={() => handleUnfollowUser(friend._id)}
+                            disabled={actionLoading[friend._id]}
+                            className="px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 lg:py-3 rounded-lg sm:rounded-xl font-bold transition-colors disabled:opacity-50 bg-red-500 hover:bg-red-600 text-white text-xs sm:text-sm lg:text-base flex-shrink-0"
+                          >
+                            {actionLoading[friend._id] ? 'Removing...' : 'Unfollow'}
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      )}
-    </div>
-  </div>
-</div>
+
 
       )}
       
       {showAddFriendsModal && (
-        <div className="fixed inset-0 bg-violet-50 backdrop-blur-md flex items-center justify-center z-50 p-4">
-  <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden relative border border-violet-100">
-    {/* Header with solid background */}
-    <div className="relative p-8 bg-violet-500">
-      <div className="relative z-10 flex justify-between items-center text-white">
-        <div>
-          <h3 className="text-3xl font-bold mb-2">Discover People</h3>
-          <p className="text-lg text-white text-opacity-90">Build your habit community</p>
-        </div>
-        <button 
-          onClick={() => {
-            setShowAddFriendsModal(false);
-            setSearchQuery('');
-            setSearchResults([]);
-          }}
-          className="text-white hover:bg-white hover:bg-opacity-20 p-3 rounded-full transition-all duration-300"
-        >
-          <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div>
-    </div>
-    
-    <div className="p-6 bg-white">
-      {/* Search bar */}
-      <div className="mb-8 relative">
-        <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-          <svg className="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </div>
-        <input
-          type="text"
-          placeholder="Search by username or email..."
-          value={searchQuery}
-          onChange={handleSearch}
-          className="w-full pl-12 pr-6 py-4 border-2 border-violet-200 rounded-2xl focus:ring-4 focus:ring-violet-100 focus:border-violet-400 transition-all duration-300 text-lg bg-violet-25 hover:bg-white"
-        />
-      </div>
-
-      <div className="overflow-y-auto max-h-96 custom-scrollbar">
-        {searchLoading && (
-          <div className="text-center py-16">
-            <p className="text-lg text-violet-700 font-medium">Finding amazing people...</p>
-          </div>
-        )}
-
-        {searchResults.length > 0 ? (
-          <div className="grid gap-4">
-            {searchResults.map(searchUser => {
-              const isAlreadyFriend = isUserAlreadyFriend(searchUser._id);
-              const isLoading = actionLoading[searchUser._id];
-              
-              // Simple solid colors instead of gradients
-              const photoColors = [
-                'bg-violet-400',
-                'bg-indigo-400',
-                'bg-purple-400',
-                'bg-fuchsia-400',
-                'bg-pink-400',
-                'bg-blue-400'
-              ];
-              const randomColor = photoColors[Math.abs(searchUser._id.charCodeAt(0)) % photoColors.length];
-              
-              return (
-                <div key={searchUser._id} className="group bg-white rounded-2xl border-2 border-violet-100 hover:border-violet-300 hover:shadow-xl transition-all duration-300 overflow-hidden">
-                  <div className="flex items-center p-6">
-                    {/* Simple avatar */}
-                    <div className="relative mr-6">
-                      <div className={`w-20 h-20 rounded-2xl ${randomColor} flex items-center justify-center shadow-lg`}>
-                        <span className="text-white font-bold text-2xl">
-                          {searchUser.username.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-                      <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-violet-400 border-3 border-white rounded-full"></div>
-                    </div>
-                    
-                    {/* User info */}
-                    <div className="flex-1">
-                      <h4 className="text-xl font-bold text-gray-900 mb-1 group-hover:text-violet-600 transition-colors">
-                        {searchUser.username}
-                      </h4>
-                      <p className="text-violet-500 text-base mb-2">{searchUser.email}</p>
-                      
-                      {isAlreadyFriend && (
-                        <div className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-violet-400 rounded-full"></div>
-                          <span className="text-sm font-semibold text-violet-600">Following</span>
-                        </div>
-                      )}
-                      
-                      {/* Simple decorative elements */}
-                      <div className="flex space-x-1 mt-2">
-                        <div className="w-2 h-2 bg-violet-300 rounded-full opacity-60"></div>
-                        <div className="w-2 h-2 bg-purple-300 rounded-full opacity-40"></div>
-                        <div className="w-2 h-2 bg-fuchsia-300 rounded-full opacity-50"></div>
-                      </div>
-                    </div>
-                    
-                    {/* Simple action button */}
-                    <button
-                      onClick={() => isAlreadyFriend ? handleUnfollowUser(searchUser._id) : handleFollowUser(searchUser._id)}
-                      disabled={isLoading}
-                      className={`px-8 py-3 rounded-xl font-bold transition-colors disabled:opacity-50 ${
-                        isAlreadyFriend 
-                          ? 'bg-red-500 hover:bg-red-600 text-white'
-                          : 'bg-violet-500 hover:bg-violet-600 text-white'
-                      }`}
-                    >
-                      {isLoading ? 'Loading...' : (isAlreadyFriend ? 'Unfollow' : 'Follow')}
-                    </button>
-                  </div>
+        <div className="fixed inset-0 bg-violet-50 backdrop-blur-md flex items-center justify-center z-50 p-2 sm:p-4">
+          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-2xl lg:max-w-3xl max-h-[90vh] sm:max-h-[85vh] overflow-hidden border border-violet-100">
+            <div className="relative p-4 sm:p-6 lg:p-8 bg-violet-500">
+              <div className="relative z-10 flex justify-between items-center text-white">
+                <div>
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">Discover People</h3>
+                  <p className="text-sm sm:text-base lg:text-lg text-white text-opacity-90">Build your habit community</p>
                 </div>
-              );
-            })}
-          </div>
-        ) : searchQuery && !searchLoading ? (
-          <div className="text-center py-16">
-            <div className="relative mb-8">
-              <div className="w-24 h-24 mx-auto bg-violet-200 rounded-2xl flex items-center justify-center">
-                <svg className="w-12 h-12 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
-                <div className="w-4 h-4 bg-fuchsia-400 rounded-full opacity-60"></div>
-              </div>
-            </div>
-            <h4 className="text-2xl font-bold text-violet-800 mb-3">No matches found</h4>
-            <p className="text-lg text-violet-600 max-w-sm mx-auto">Try different keywords to discover new habit builders in your community.</p>
-          </div>
-        ) : !searchQuery ? (
-          <div className="text-center py-16">
-            <div className="relative mb-8">
-              <div className="w-24 h-24 mx-auto bg-violet-100 rounded-2xl flex items-center justify-center border-2 border-violet-200">
-                <svg className="w-12 h-12 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <div className="absolute top-4 left-1/2 transform -translate-x-8">
-                <div className="w-3 h-3 bg-violet-400 rounded-full"></div>
-              </div>
-              <div className="absolute top-8 right-1/2 transform translate-x-8">
-                <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                <button 
+                  onClick={() => {
+                    setShowAddFriendsModal(false);
+                    setSearchQuery('');
+                    setSearchResults([]);
+                  }}
+                  className="text-white hover:bg-white hover:bg-opacity-20 p-2 sm:p-3 rounded-full transition-all duration-300"
+                >
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
               </div>
             </div>
-            <h4 className="text-2xl font-bold text-violet-800 mb-3">Discover Your Community</h4>
-            <p className="text-lg text-violet-600 max-w-md mx-auto">Start typing to find people who share your passion for building better habits.</p>
+            
+            <div className="p-3 sm:p-4 lg:p-6 bg-white">
+              <div className="mb-4 sm:mb-6 lg:mb-8 relative">
+                <div className="absolute inset-y-0 left-3 sm:left-4 flex items-center pointer-events-none">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search by username or email..."
+                  value={searchQuery}
+                  onChange={handleSearch}
+                  className="w-full pl-10 sm:pl-12 lg:pl-12 pr-4 sm:pr-6 py-3 sm:py-4 border-2 border-violet-200 rounded-xl sm:rounded-2xl focus:ring-4 focus:ring-violet-100 focus:border-violet-400 transition-all duration-300 text-sm sm:text-base lg:text-lg bg-violet-25 hover:bg-white"
+                />
+              </div>
+
+              <div className="overflow-y-auto max-h-60 sm:max-h-80 lg:max-h-96 custom-scrollbar">
+                {searchLoading && (
+                  <div className="text-center py-8 sm:py-12 lg:py-16">
+                    <p className="text-base sm:text-lg text-violet-700 font-medium">Finding amazing people...</p>
+                  </div>
+                )}
+
+                {searchResults.length > 0 ? (
+                  <div className="grid gap-2 sm:gap-3 lg:gap-4">
+                    {searchResults.map(searchUser => {
+                      const isAlreadyFriend = isUserAlreadyFriend(searchUser._id);
+                      const isLoading = actionLoading[searchUser._id];
+                      
+                      const photoColors = [
+                        'bg-violet-400',
+                        'bg-indigo-400',
+                        'bg-purple-400',
+                        'bg-fuchsia-400',
+                        'bg-pink-400',
+                        'bg-blue-400'
+                      ];
+                      const randomColor = photoColors[Math.abs(searchUser._id.charCodeAt(0)) % photoColors.length];
+                      
+                      return (
+                        <div key={searchUser._id} className="group bg-white rounded-xl sm:rounded-2xl border-2 border-violet-100 hover:border-violet-300 hover:shadow-xl transition-all duration-300 overflow-hidden">
+                          <div className="flex items-center p-3 sm:p-4 lg:p-6 space-x-3 sm:space-x-4 lg:space-x-6">
+                            <div className="relative flex-shrink-0">
+                              <div className={`w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-xl sm:rounded-2xl ${randomColor} flex items-center justify-center shadow-lg`}>
+                                <span className="text-white font-bold text-sm sm:text-lg lg:text-2xl">
+                                  {searchUser.username.charAt(0).toUpperCase()}
+                                </span>
+                              </div>
+                              <div className="absolute -bottom-0.5 -right-0.5 sm:-bottom-1 sm:-right-1 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 bg-violet-400 border-2 sm:border-3 border-white rounded-full"></div>
+                            </div>
+                            
+                            <div className="flex-1 min-w-0">
+                              <h4 className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900 mb-0.5 sm:mb-1 group-hover:text-violet-600 transition-colors truncate">
+                                {searchUser.username}
+                              </h4>
+                              <p className="text-xs sm:text-sm lg:text-base text-violet-500 mb-1 sm:mb-2 truncate">{searchUser.email}</p>
+                              
+                              {isAlreadyFriend && (
+                                <div className="flex items-center space-x-1 sm:space-x-2">
+                                  <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-violet-400 rounded-full"></div>
+                                  <span className="text-xs sm:text-sm font-semibold text-violet-600">Following</span>
+                                </div>
+                              )}
+                              
+                              <div className="flex space-x-1 mt-1 sm:mt-2">
+                                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-violet-300 rounded-full opacity-60"></div>
+                                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-300 rounded-full opacity-40"></div>
+                                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-fuchsia-300 rounded-full opacity-50"></div>
+                              </div>
+                            </div>
+                            
+                            <button
+                              onClick={() => isAlreadyFriend ? handleUnfollowUser(searchUser._id) : handleFollowUser(searchUser._id)}
+                              disabled={isLoading}
+                              className={`px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 lg:py-3 rounded-lg sm:rounded-xl font-bold transition-colors disabled:opacity-50 text-xs sm:text-sm lg:text-base flex-shrink-0 ${
+                                isAlreadyFriend 
+                                  ? 'bg-red-500 hover:bg-red-600 text-white'
+                                  : 'bg-violet-500 hover:bg-violet-600 text-white'
+                              }`}
+                            >
+                              {isLoading ? 'Loading...' : (isAlreadyFriend ? 'Unfollow' : 'Follow')}
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : searchQuery && !searchLoading ? (
+                  <div className="text-center py-8 sm:py-12 lg:py-16">
+                    <div className="relative mb-4 sm:mb-6 lg:mb-8">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto bg-violet-200 rounded-xl sm:rounded-2xl flex items-center justify-center">
+                        <svg className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                      </div>
+                      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1 sm:-translate-y-2">
+                        <div className="w-2 h-2 sm:w-3 sm:h-3 lg:w-4 lg:h-4 bg-fuchsia-400 rounded-full opacity-60"></div>
+                      </div>
+                    </div>
+                    <h4 className="text-lg sm:text-xl lg:text-2xl font-bold text-violet-800 mb-2 sm:mb-3">No matches found</h4>
+                    <p className="text-sm sm:text-base lg:text-lg text-violet-600 max-w-xs sm:max-w-sm mx-auto px-4">Try different keywords to discover new habit builders in your community.</p>
+                  </div>
+                ) : !searchQuery ? (
+                  <div className="text-center py-8 sm:py-12 lg:py-16">
+                    <div className="relative mb-4 sm:mb-6 lg:mb-8">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto bg-violet-100 rounded-xl sm:rounded-2xl flex items-center justify-center border-2 border-violet-200">
+                        <svg className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                      </div>
+                      <div className="absolute top-2 sm:top-4 left-1/2 transform -translate-x-6 sm:-translate-x-8">
+                        <div className="w-2 h-2 sm:w-3 sm:h-3 bg-violet-400 rounded-full"></div>
+                      </div>
+                      <div className="absolute top-4 sm:top-8 right-1/2 transform translate-x-6 sm:translate-x-8">
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-400 rounded-full"></div>
+                      </div>
+                    </div>
+                    <h4 className="text-lg sm:text-xl lg:text-2xl font-bold text-violet-800 mb-2 sm:mb-3">Discover Your Community</h4>
+                    <p className="text-sm sm:text-base lg:text-lg text-violet-600 max-w-xs sm:max-w-md mx-auto px-4">Start typing to find people who share your passion for building better habits.</p>
+                  </div>
+                ) : null}
+              </div>
+            </div>
           </div>
-        ) : null}
-      </div>
-    </div>
-  </div>
-</div>
+        </div>
+
 
       )}
       

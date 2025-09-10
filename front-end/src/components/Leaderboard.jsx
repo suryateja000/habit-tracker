@@ -1,4 +1,3 @@
-// src/components/Leaderboard.jsx - Professional design without icons/emojis - Fully Responsive
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
@@ -29,13 +28,13 @@ export default function Leaderboard() {
   }
 
   const rankStyles = [
-    { backgroundColor: '#FFD700', color: 'white' }, // 1st - Gold
-    { backgroundColor: '#C0C0C0', color: 'white' }, // 2nd - Silver
-    { backgroundColor: '#CD7F32', color: 'white' }, // 3rd - Bronze
+    { backgroundColor: '#FFD700', color: 'white' },  
+    { backgroundColor: '#C0C0C0', color: 'white' }, 
+    { backgroundColor: '#CD7F32', color: 'white' }, 
   ];
 
   const getRankStyle = (index) => {
-    return rankStyles[index] || { backgroundColor: '#dcb2ffff', color: '#374151' }; // Default: gray bg, dark text
+    return rankStyles[index] || { backgroundColor: '#dcb2ffff', color: '#374151' };  
   };
 
   const getRankBadge = (index) => {
@@ -45,7 +44,6 @@ export default function Leaderboard() {
   if (loading) {
     return (
       <div className="min-h-screen" style={{ backgroundColor: '#f6f7fb' }}>
-        {/* Floating Elements - Responsive positioning */}
         <div className="absolute top-8 xs:top-12 sm:top-16 left-4 xs:left-8 sm:left-16 w-16 xs:w-20 sm:w-24 h-16 xs:h-20 sm:h-24 rounded-full opacity-40" style={{ backgroundColor: '#faca15' }}></div>
         <div className="absolute top-1/4 right-4 xs:right-8 sm:right-20 w-12 xs:w-14 sm:w-16 h-12 xs:h-14 sm:h-16 rounded-full opacity-50" style={{ backgroundColor: '#3ad2ff' }}></div>
         <div className="absolute bottom-16 xs:bottom-24 sm:bottom-32 left-2 xs:left-4 sm:left-8 w-14 xs:w-16 sm:w-20 h-14 xs:h-16 sm:h-20 rounded-full opacity-35" style={{ backgroundColor: '#e04e4e' }}></div>
@@ -62,12 +60,10 @@ export default function Leaderboard() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f6f7fb' }}>
-      {/* Floating Elements - Responsive positioning */}
       <div className="absolute top-8 xs:top-12 sm:top-16 left-4 xs:left-8 sm:left-16 w-16 xs:w-20 sm:w-24 h-16 xs:h-20 sm:h-24 rounded-full opacity-40" style={{ backgroundColor: '#faca15' }}></div>
       <div className="absolute top-1/4 right-4 xs:right-8 sm:right-20 w-12 xs:w-14 sm:w-16 h-12 xs:h-14 sm:h-16 rounded-full opacity-50" style={{ backgroundColor: '#3ad2ff' }}></div>
       <div className="absolute bottom-16 xs:bottom-24 sm:bottom-32 left-2 xs:left-4 sm:left-8 w-14 xs:w-16 sm:w-20 h-14 xs:h-16 sm:h-20 rounded-full opacity-35" style={{ backgroundColor: '#e04e4e' }}></div>
 
-      {/* Clean Header - Enhanced responsive design */}
       <header className="bg-white/90 backdrop-blur-sm shadow-sm border-b border-violet-100">
         <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 py-3 xs:py-4">
           <div className="flex flex-col xs:flex-row xs:justify-between xs:items-center gap-4 xs:gap-0">

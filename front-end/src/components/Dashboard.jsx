@@ -1,4 +1,3 @@
-// src/components/Dashboard.jsx - Clean Dashboard with consolidated stats
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -15,10 +14,8 @@ import {
   unfollowUser
 } from '../Api';
 
-// Define API_BASE_URL for debugging
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://habit-tracker-gx4l.onrender.com/api';
 
-// Debounce utility to prevent excessive API calls
 const debounce = (func, wait) => {
   let timeout;
   return function executedFunction(...args) {
@@ -35,14 +32,11 @@ export default function Dashboard() {
   const { user, logout, token } = useAuth();
   const navigate = useNavigate();
   
-  // Habit management state
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
   const [error, setError] = useState('');
   const [profileImage, setProfileImage] = useState(null);
-  
-  // Friend management state
   const [friends, setFriends] = useState([]);
   const [friendIds, setFriendIds] = useState(new Set());
   const [showFollowersModal, setShowFollowersModal] = useState(false);
@@ -52,7 +46,6 @@ export default function Dashboard() {
   const [searchLoading, setSearchLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState({});
 
-  // Load habits when component mounts
   useEffect(() => {
     const loadHabits = async () => {
       if (!token) {
@@ -76,7 +69,6 @@ export default function Dashboard() {
     loadHabits();
   }, [token]);
 
-  // Define loadFriends function
   const loadFriends = async () => {
     if (!token) return;
     
@@ -85,7 +77,6 @@ export default function Dashboard() {
       const friendsData = await getFriends();
       setFriends(friendsData);
       
-      // Create a Set of friend IDs for quick status checking
       const friendIdSet = new Set(friendsData.map(friend => friend._id));
       setFriendIds(friendIdSet);
       
@@ -97,14 +88,13 @@ export default function Dashboard() {
     }
   };
 
-  // Load friends when component mounts
+  // Load friends
   useEffect(() => {
     if (token) {
       loadFriends();
     }
   }, [token]);
 
-  // Test backend connection
   useEffect(() => {
     const testBackendConnection = async () => {
       if (!token) return;
@@ -135,7 +125,6 @@ export default function Dashboard() {
     }
   }, [token]);
 
-  // Your original habit management functions
   const handleAddHabit = async (habitData) => {
     try {
       const newHabit = await createHabit(habitData);
@@ -172,14 +161,12 @@ export default function Dashboard() {
     }
   };
 
-  // Check if user is already a friend
   const isUserAlreadyFriend = (userId) => {
     const isFriend = friendIds.has(userId);
     console.log(`Is user ${userId} already a friend?`, isFriend);
     return isFriend;
   };
 
-  // Debounced search function
   const debouncedSearch = React.useCallback(
     debounce(async (searchQuery) => {
       if (searchQuery.trim().length < 2) {
@@ -210,7 +197,7 @@ export default function Dashboard() {
     debouncedSearch(query);
   };
 
-  // Follow user with proper validation
+  // Follow
   const handleFollowUser = async (userId) => {
     console.log('Attempting to follow user:', userId);
     
@@ -231,7 +218,6 @@ export default function Dashboard() {
       console.log('Sending follow request...');
       await sendFollowRequest(userId);
       
-      // Update local state immediately
       const userToAdd = searchResults.find(user => user._id === userId);
       if (userToAdd) {
         setFriends(prev => [...prev, userToAdd]);
@@ -249,7 +235,7 @@ export default function Dashboard() {
     }
   };
 
-  // Handle unfollow with proper state updates
+  // unfollow
   const handleUnfollowUser = async (userId) => {
     if (!window.confirm('Are you sure you want to unfollow this user?')) return;
 
@@ -275,19 +261,6 @@ export default function Dashboard() {
     }
   };
 
-  // Handle profile image upload
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setProfileImage(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Calculate stats
   const todayDate = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -679,7 +652,7 @@ export default function Dashboard() {
   );
 }
 
-// Modern Habit Card Component with Responsive Design
+// Habit Card 
 function ModernHabitCard({ habit, onToggle, onDelete }) {
   const [loading, setLoading] = useState(false);
 
@@ -779,7 +752,7 @@ function ModernHabitCard({ habit, onToggle, onDelete }) {
   );
 }
 
-// Modern Add Habit Form Component with Responsive Design
+// Add Habit Form 
 function ModernAddHabitForm({ onAdd, onCancel }) {
   const [formData, setFormData] = useState({
     name: '',

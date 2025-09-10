@@ -1,4 +1,3 @@
-// src/components/FriendsActivity.jsx - Professional and Themed Layout
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -91,12 +90,10 @@ export default function FriendsActivity() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#f6f7fb' }}>
-      {/* Decorative Elements */}
       <div className="absolute top-16 left-16 w-24 h-24 rounded-full opacity-40" style={{ backgroundColor: '#faca15' }}></div>
       <div className="absolute top-1/4 right-20 w-16 h-16 rounded-full opacity-50" style={{ backgroundColor: '#3ad2ff' }}></div>
       <div className="absolute bottom-32 left-8 w-20 h-20 rounded-full opacity-35" style={{ backgroundColor: '#e04e4e' }}></div>
 
-      {/* Clean Header */}
       <header className="bg-white/90 backdrop-blur-sm shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
@@ -119,7 +116,6 @@ export default function FriendsActivity() {
       </header>
 
       <main className="max-w-6xl mx-auto px-6 py-8">
-        {/* Error Display */}
         {error && (
           <div className="mb-6 bg-red-50 border border-red-200 rounded-xl p-4">
             <p className="text-red-800 font-medium">{error}</p>
@@ -127,7 +123,6 @@ export default function FriendsActivity() {
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Friends Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-lg border border-violet-100 sticky top-8">
               <div className="p-6 border-b border-gray-100">
@@ -178,7 +173,6 @@ export default function FriendsActivity() {
             </div>
           </div>
 
-          {/* Activity Content */}
           <div className="lg:col-span-3">
             {activities.length === 0 ? (
               <div className="bg-white rounded-2xl shadow-lg border border-violet-100 p-12 text-center">
@@ -197,10 +191,8 @@ export default function FriendsActivity() {
             ) : (
               <div className="space-y-6">
                 {selectedFriend === null ? (
-                  // Show all friends organized by friend
                   Object.entries(groupedActivities).map(([friendId, data]) => (
                     <div key={friendId} className="bg-white rounded-2xl shadow-lg border border-violet-100 overflow-hidden">
-                      {/* Friend Header */}
                       <div className="p-6 bg-gradient-to-r from-violet-50 to-purple-50">
                         <div className="flex items-center space-x-4">
                           <div className="w-12 h-12 bg-violet-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
@@ -213,7 +205,6 @@ export default function FriendsActivity() {
                         </div>
                       </div>
 
-                      {/* Friend's Activities */}
                       <div className="p-6">
                         <div className="space-y-4">
                           {data.activities.slice(0, 3).map((activity, index) => (

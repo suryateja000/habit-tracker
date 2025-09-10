@@ -1,4 +1,4 @@
-// src/components/Dashboard.jsx - Clean Dashboard with consolidated stats
+
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -15,10 +15,9 @@ import {
   unfollowUser
 } from '../Api';
 
-// Define API_BASE_URL for debugging
+
 const API_BASE_URL = 'http://localhost:5000/api';
 
-// Debounce utility to prevent excessive API calls
 const debounce = (func, wait) => {
   let timeout;
   return function executedFunction(...args) {
@@ -34,15 +33,11 @@ const debounce = (func, wait) => {
 export default function Dashboard() {
   const { user, logout, token } = useAuth();
   const navigate = useNavigate();
-  
-  // Habit management state
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
   const [error, setError] = useState('');
   const [profileImage, setProfileImage] = useState(null);
-  
-  // Friend management state
   const [friends, setFriends] = useState([]);
   const [friendIds, setFriendIds] = useState(new Set());
   const [showFollowersModal, setShowFollowersModal] = useState(false);
@@ -52,7 +47,7 @@ export default function Dashboard() {
   const [searchLoading, setSearchLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState({});
 
-  // Load habits when component mounts
+  
   useEffect(() => {
     const loadHabits = async () => {
       if (!token) {
@@ -76,7 +71,7 @@ export default function Dashboard() {
     loadHabits();
   }, [token]);
 
-  // Define loadFriends function
+  
   const loadFriends = async () => {
     if (!token) return;
     
@@ -85,7 +80,7 @@ export default function Dashboard() {
       const friendsData = await getFriends();
       setFriends(friendsData);
       
-      // Create a Set of friend IDs for quick status checking
+    
       const friendIdSet = new Set(friendsData.map(friend => friend._id));
       setFriendIds(friendIdSet);
       
@@ -97,14 +92,14 @@ export default function Dashboard() {
     }
   };
 
-  // Load friends when component mounts
+  
   useEffect(() => {
     if (token) {
       loadFriends();
     }
   }, [token]);
 
-  // Test backend connection
+  
   useEffect(() => {
     const testBackendConnection = async () => {
       if (!token) return;
@@ -135,7 +130,7 @@ export default function Dashboard() {
     }
   }, [token]);
 
-  // Your original habit management functions
+  
   const handleAddHabit = async (habitData) => {
     try {
       const newHabit = await createHabit(habitData);
@@ -172,14 +167,12 @@ export default function Dashboard() {
     }
   };
 
-  // Check if user is already a friend
   const isUserAlreadyFriend = (userId) => {
     const isFriend = friendIds.has(userId);
     console.log(`Is user ${userId} already a friend?`, isFriend);
     return isFriend;
-  };
-
-  // Debounced search function
+  }
+  
   const debouncedSearch = React.useCallback(
     debounce(async (searchQuery) => {
       if (searchQuery.trim().length < 2) {
@@ -210,7 +203,6 @@ export default function Dashboard() {
     debouncedSearch(query);
   };
 
-  // Follow user with proper validation
   const handleFollowUser = async (userId) => {
     console.log('Attempting to follow user:', userId);
     
@@ -231,7 +223,7 @@ export default function Dashboard() {
       console.log('Sending follow request...');
       await sendFollowRequest(userId);
       
-      // Update local state immediately
+      
       const userToAdd = searchResults.find(user => user._id === userId);
       if (userToAdd) {
         setFriends(prev => [...prev, userToAdd]);
@@ -249,7 +241,7 @@ export default function Dashboard() {
     }
   };
 
-  // Handle unfollow with proper state updates
+  
   const handleUnfollowUser = async (userId) => {
     if (!window.confirm('Are you sure you want to unfollow this user?')) return;
 
@@ -274,8 +266,7 @@ export default function Dashboard() {
       setActionLoading(prev => ({ ...prev, [userId]: false }));
     }
   };
-
-  // Handle profile image upload
+  
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith('image/')) {
@@ -287,7 +278,6 @@ export default function Dashboard() {
     }
   };
 
-  // Calculate stats
   const todayDate = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -314,12 +304,10 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-violet-50 to-purple-50">
-      {/* Floating Elements */}
       <div className="absolute top-16 left-16 w-24 h-24 rounded-full opacity-40" style={{ backgroundColor: '#faca15' }}></div>
       <div className="absolute top-1/4 right-20 w-16 h-16 rounded-full opacity-50" style={{ backgroundColor: '#3ad2ff' }}></div>
       <div className="absolute bottom-32 left-8 w-20 h-20 rounded-full opacity-35" style={{ backgroundColor: '#e04e4e' }}></div>
 
-      {/* Clean Header */}
       <header className="bg-gradient-to-br from-slate-50 via-violet-50 to-purple-50 backdrop-blur-sm shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex justify-between items-center">
@@ -336,7 +324,7 @@ export default function Dashboard() {
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-12 space-y-6 sm:space-y-10">
         
-        {/* Error Display */}
+        
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-2xl p-4 shadow-lg">
             <div className="flex justify-between items-center">
@@ -351,11 +339,11 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Hero Welcome Section */}
+        
         <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-10 relative overflow-hidden">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center relative z-10">
             
-            {/* Welcome Text & Stats - Left Side */}
+          
             <div className="lg:col-span-1 order-2 lg:order-1">
               <div className="mb-6">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
@@ -364,7 +352,7 @@ export default function Dashboard() {
                 <p className="text-sm sm:text-base text-gray-600 mb-4">{todayDate}</p>
               </div>
 
-              {/* Stats Grid */}
+          
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="text-center p-4 bg-gray-50 rounded-xl border">
                   <div className="text-xl sm:text-2xl font-bold mb-1" style={{ color: '#7e3ff2' }}>{progressPercentage}%</div>
@@ -385,7 +373,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              {/* Navigation Buttons */}
+              
               <div className="flex flex-wrap gap-2 sm:gap-3">
                 <button 
                   onClick={() => setShowFollowersModal(true)}
@@ -415,7 +403,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Hero Image - Right Side */}
+          
             <div className="lg:col-span-1 relative order-2 lg:order-3">
               <div className="w-64 h-40 sm:w-80 sm:h-48 md:w-96 md:h-56 lg:w-80 lg:h-52 xl:w-96 xl:h-60 mx-auto relative">
                 <img 
@@ -425,7 +413,7 @@ export default function Dashboard() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-violet-900/10 to-transparent rounded-xl sm:rounded-2xl"></div>
 
-                {/* Floating Labels */}
+                
                 <div className="absolute -top-2 -left-2 px-3 py-1 rounded-full text-xs font-medium text-white shadow-lg" style={{ backgroundColor: '#faca15' }}>
                   Mindfulness
                 </div>
@@ -441,7 +429,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Habits Section */}
+        
         <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden">
           <div className="p-4 sm:p-6 lg:p-8 border-b border-gray-100">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
@@ -449,7 +437,7 @@ export default function Dashboard() {
                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Your Habits ({totalHabits})</h2>
                 <p className="text-sm sm:text-base text-gray-600 mt-1">Track your daily progress and build consistency</p>
               </div>
-              {/* Add New Habit Button */}
+              
               <button 
                 onClick={() => setShowAddForm(true)}
                 className="px-4 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-semibold text-white transition-colors shadow-lg hover:shadow-xl text-sm sm:text-base whitespace-nowrap"
@@ -493,8 +481,6 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
-
-      {/* All your existing modals remain the same but with responsive updates */}
       {showFollowersModal && (
         <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
@@ -679,7 +665,6 @@ export default function Dashboard() {
   );
 }
 
-// Modern Habit Card Component with Responsive Design
 function ModernHabitCard({ habit, onToggle, onDelete }) {
   const [loading, setLoading] = useState(false);
 
@@ -704,7 +689,7 @@ function ModernHabitCard({ habit, onToggle, onDelete }) {
     style={habit.completedToday ? { ringColor: '#3ad2ff' } : {}}
     >
       
-      {/* Header */}
+      
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1 min-w-0">
           <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 truncate">{habit.name}</h3>
@@ -729,7 +714,7 @@ function ModernHabitCard({ habit, onToggle, onDelete }) {
         </button>
       </div>
 
-      {/* Stats */}
+      
       <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-6">
         <div className="text-center p-2 sm:p-3 rounded-xl sm:rounded-2xl" style={{ backgroundColor: '#f6f7fb' }}>
           <div className="text-sm sm:text-lg font-bold" style={{ color: '#7e3ff2' }}>{habit.currentStreak || 0}</div>
@@ -745,7 +730,7 @@ function ModernHabitCard({ habit, onToggle, onDelete }) {
         </div>
       </div>
 
-      {/* Action Button */}
+      
       {habit.completedToday ? (
         <div className="flex items-center justify-center py-2.5 sm:py-3 px-4 rounded-xl sm:rounded-2xl text-white font-semibold text-sm sm:text-base" style={{ backgroundColor: '#3ad2ff' }}>
           <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -779,7 +764,6 @@ function ModernHabitCard({ habit, onToggle, onDelete }) {
   );
 }
 
-// Modern Add Habit Form Component with Responsive Design
 function ModernAddHabitForm({ onAdd, onCancel }) {
   const [formData, setFormData] = useState({
     name: '',

@@ -1,4 +1,4 @@
-// src/components/Login.jsx
+
 import React, { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
@@ -50,24 +50,24 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-violet-50 to-purple-50 flex items-center justify-center p-4">
-      {/* Background Decorative Elements */}
+      
       <div className="absolute top-20 left-20 w-20 h-20 bg-gradient-to-br from-violet-200 to-purple-300 rounded-full opacity-60 animate-pulse hidden lg:block"></div>
       <div className="absolute bottom-32 right-16 w-16 h-16 bg-gradient-to-br from-amber-200 to-orange-300 rounded-full opacity-50 animate-bounce"></div>
       <div className="absolute top-1/3 right-8 w-12 h-12 bg-gradient-to-br from-emerald-200 to-teal-300 rounded-full opacity-70 animate-pulse"></div>
       
-      {/* Main Login Container */}
+      
       <div className="w-full max-w-md relative z-10">
-        {/* Header */}
+        
         <div className="text-center mb-8">
           
           <h1 className="text-3xl font-bold text-slate-800 mb-2">Welcome Back!</h1>
           <p className="text-slate-600">Sign in to continue building your habits</p>
         </div>
 
-        {/* Login Card */}
+        
         <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/50 p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Username Field */}
+            
             <div className="space-y-2">
               <label htmlFor="username" className="block text-sm font-semibold text-slate-700">
                 Username
@@ -90,7 +90,7 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Password Field */}
+          
             <div className="space-y-2">
               <label htmlFor="password" className="block text-sm font-semibold text-slate-700">
                 Password
@@ -129,7 +129,7 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Error Message */}
+            
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center space-x-3">
                 <svg className="h-5 w-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -139,7 +139,7 @@ export default function Login() {
               </div>
             )}
 
-            {/* Submit Button */}
+            
             <button
               type="submit"
               disabled={loading}
@@ -164,7 +164,7 @@ export default function Login() {
             </button>
           </form>
 
-          {/* Footer */}
+          
           <div className="mt-8 text-center">
             <p className="text-slate-600">
               Don't have an account?{' '}
@@ -178,7 +178,7 @@ export default function Login() {
           </div>
         </div>
 
-        {/* Back to Home */}
+        
         <div className="text-center mt-6">
           <Link 
             to="/" 

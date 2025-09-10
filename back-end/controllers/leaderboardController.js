@@ -1,4 +1,3 @@
-// controllers/leaderboardController.js
 import User from '../models/User.js';
 import Habit from '../models/Habit.js';
 

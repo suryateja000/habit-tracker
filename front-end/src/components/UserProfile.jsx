@@ -1,4 +1,4 @@
-// src/components/UserPage.jsx
+
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { getFriends, unfollowUser, getLeaderboard } from '../Api';
@@ -10,7 +10,7 @@ export default function UserPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch followers and leaderboard data
+  
   const fetchSocialData = async () => {
     if (!isAuthenticated) return;
     
@@ -23,7 +23,7 @@ export default function UserPage() {
         getLeaderboard()
       ]);
 
-      // Enhance followers with leaderboard data
+      
       const followersWithRank = friendsData.map(follower => {
         const leaderboardEntry = leaderboardData.find(
           entry => entry._id === follower._id
@@ -50,15 +50,11 @@ export default function UserPage() {
     fetchSocialData();
   }, [isAuthenticated, token]);
 
-  // Handle view profile action
+  
   const handleViewProfile = (followerId) => {
-    // Navigate to user profile or show modal
     console.log('Viewing profile for user:', followerId);
-    // You can implement navigation logic here
-    // For example: navigate(`/profile/${followerId}`);
   };
 
-  // Handle unfollow action
   const handleUnfollow = async (followerId) => {
     if (!window.confirm('Are you sure you want to unfollow this user?')) {
       return;
@@ -67,10 +63,9 @@ export default function UserPage() {
     try {
       await unfollowUser(token, followerId);
       
-      // Remove from followers list
+      
       setFollowers(prev => prev.filter(f => f._id !== followerId));
       
-      // Show success message
       console.log('Successfully unfollowed user');
     } catch (err) {
       console.error('Failed to unfollow user:', err);
@@ -78,7 +73,6 @@ export default function UserPage() {
     }
   };
 
-  // Show login prompt for non-authenticated users
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -115,7 +109,7 @@ export default function UserPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Friend Progress Section */}
+        
         <section id="socialIntegration" className="bg-white rounded-xl shadow-sm">
           <div className="p-6 border-b border-gray-200">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -167,7 +161,7 @@ export default function UserPage() {
                     key={follower._id} 
                     className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow"
                   >
-                    {/* Follower Info */}
+                    
                     <div className="mb-4">
                       <div className="flex items-center mb-3">
                         <div className="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
@@ -183,14 +177,13 @@ export default function UserPage() {
                         </div>
                       </div>
 
-                      {/* Stats */}
                       <div className="space-y-2">
                         <div className="flex justify-between items-center">
                           <span className="text-sm font-medium text-gray-700">
                             Streak:
                           </span>
                           <span className="text-lg font-bold text-orange-600 flex items-center">
-                            🔥 {follower.streak}
+                            {follower.streak}
                           </span>
                         </div>
                         
@@ -205,7 +198,7 @@ export default function UserPage() {
                       </div>
                     </div>
 
-                    {/* Action Buttons */}
+                    
                     <div className="flex space-x-2">
                       <button
                         onClick={() => handleViewProfile(follower._id)}

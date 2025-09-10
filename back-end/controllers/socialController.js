@@ -1,4 +1,4 @@
-// controllers/socialController.js
+
 import User from '../models/User.js';
 import Friendship from '../models/Friendship.js';
 import Habit from '../models/Habit.js';

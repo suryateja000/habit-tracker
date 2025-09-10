@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +14,7 @@ import {
   sendFollowRequest,
   unfollowUser
 } from '../Api';
+
 
 const API_BASE_URL = 'https://habit-tracker-gx4l.onrender.com/api';
 
@@ -31,7 +33,6 @@ const debounce = (func, wait) => {
 export default function Dashboard() {
   const { user, logout, token } = useAuth();
   const navigate = useNavigate();
-  
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -46,6 +47,7 @@ export default function Dashboard() {
   const [searchLoading, setSearchLoading] = useState(false);
   const [actionLoading, setActionLoading] = useState({});
 
+  
   useEffect(() => {
     const loadHabits = async () => {
       if (!token) {
@@ -69,6 +71,7 @@ export default function Dashboard() {
     loadHabits();
   }, [token]);
 
+  
   const loadFriends = async () => {
     if (!token) return;
     
@@ -77,6 +80,7 @@ export default function Dashboard() {
       const friendsData = await getFriends();
       setFriends(friendsData);
       
+    
       const friendIdSet = new Set(friendsData.map(friend => friend._id));
       setFriendIds(friendIdSet);
       
@@ -88,13 +92,14 @@ export default function Dashboard() {
     }
   };
 
-  // Load friends
+  
   useEffect(() => {
     if (token) {
       loadFriends();
     }
   }, [token]);
 
+  
   useEffect(() => {
     const testBackendConnection = async () => {
       if (!token) return;
@@ -125,6 +130,7 @@ export default function Dashboard() {
     }
   }, [token]);
 
+  
   const handleAddHabit = async (habitData) => {
     try {
       const newHabit = await createHabit(habitData);
@@ -165,8 +171,8 @@ export default function Dashboard() {
     const isFriend = friendIds.has(userId);
     console.log(`Is user ${userId} already a friend?`, isFriend);
     return isFriend;
-  };
-
+  }
+  
   const debouncedSearch = React.useCallback(
     debounce(async (searchQuery) => {
       if (searchQuery.trim().length < 2) {
@@ -197,7 +203,6 @@ export default function Dashboard() {
     debouncedSearch(query);
   };
 
-  // Follow
   const handleFollowUser = async (userId) => {
     console.log('Attempting to follow user:', userId);
     
@@ -218,6 +223,7 @@ export default function Dashboard() {
       console.log('Sending follow request...');
       await sendFollowRequest(userId);
       
+      
       const userToAdd = searchResults.find(user => user._id === userId);
       if (userToAdd) {
         setFriends(prev => [...prev, userToAdd]);
@@ -235,7 +241,7 @@ export default function Dashboard() {
     }
   };
 
-  // unfollow
+  
   const handleUnfollowUser = async (userId) => {
     if (!window.confirm('Are you sure you want to unfollow this user?')) return;
 
@@ -258,6 +264,17 @@ export default function Dashboard() {
       setError('Failed to unfollow user: ' + err.message);
     } finally {
       setActionLoading(prev => ({ ...prev, [userId]: false }));
+    }
+  };
+  
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProfileImage(e.target.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -287,12 +304,10 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-violet-50 to-purple-50">
-      {/* Floating Elements */}
       <div className="absolute top-16 left-16 w-24 h-24 rounded-full opacity-40" style={{ backgroundColor: '#faca15' }}></div>
       <div className="absolute top-1/4 right-20 w-16 h-16 rounded-full opacity-50" style={{ backgroundColor: '#3ad2ff' }}></div>
       <div className="absolute bottom-32 left-8 w-20 h-20 rounded-full opacity-35" style={{ backgroundColor: '#e04e4e' }}></div>
 
-      {/* Clean Header */}
       <header className="bg-gradient-to-br from-slate-50 via-violet-50 to-purple-50 backdrop-blur-sm shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex justify-between items-center">
@@ -309,7 +324,7 @@ export default function Dashboard() {
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-12 space-y-6 sm:space-y-10">
         
-        {/* Error Display */}
+        
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-2xl p-4 shadow-lg">
             <div className="flex justify-between items-center">
@@ -324,11 +339,11 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Hero Welcome Section */}
+        
         <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-10 relative overflow-hidden">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center relative z-10">
             
-            {/* Welcome Text & Stats - Left Side */}
+          
             <div className="lg:col-span-1 order-2 lg:order-1">
               <div className="mb-6">
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
@@ -337,7 +352,7 @@ export default function Dashboard() {
                 <p className="text-sm sm:text-base text-gray-600 mb-4">{todayDate}</p>
               </div>
 
-              {/* Stats Grid */}
+          
               <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="text-center p-4 bg-gray-50 rounded-xl border">
                   <div className="text-xl sm:text-2xl font-bold mb-1" style={{ color: '#7e3ff2' }}>{progressPercentage}%</div>
@@ -358,7 +373,7 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              {/* Navigation Buttons */}
+              
               <div className="flex flex-wrap gap-2 sm:gap-3">
                 <button 
                   onClick={() => setShowFollowersModal(true)}
@@ -388,7 +403,7 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Hero Image - Right Side */}
+          
             <div className="lg:col-span-1 relative order-2 lg:order-3">
               <div className="w-64 h-40 sm:w-80 sm:h-48 md:w-96 md:h-56 lg:w-80 lg:h-52 xl:w-96 xl:h-60 mx-auto relative">
                 <img 
@@ -398,7 +413,7 @@ export default function Dashboard() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-violet-900/10 to-transparent rounded-xl sm:rounded-2xl"></div>
 
-                {/* Floating Labels */}
+                
                 <div className="absolute -top-2 -left-2 px-3 py-1 rounded-full text-xs font-medium text-white shadow-lg" style={{ backgroundColor: '#faca15' }}>
                   Mindfulness
                 </div>
@@ -414,7 +429,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Habits Section */}
+        
         <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden">
           <div className="p-4 sm:p-6 lg:p-8 border-b border-gray-100">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
@@ -422,7 +437,7 @@ export default function Dashboard() {
                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Your Habits ({totalHabits})</h2>
                 <p className="text-sm sm:text-base text-gray-600 mt-1">Track your daily progress and build consistency</p>
               </div>
-              {/* Add New Habit Button */}
+              
               <button 
                 onClick={() => setShowAddForm(true)}
                 className="px-4 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-semibold text-white transition-colors shadow-lg hover:shadow-xl text-sm sm:text-base whitespace-nowrap"
@@ -466,180 +481,274 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
-
-      {/* All your existing modals remain the same but with responsive updates */}
       {showFollowersModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
-            <div className="p-6 sm:p-8 border-b border-gray-100" style={{ backgroundColor: '#f6f7fb' }}>
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">My Friends</h3>
-                  <p className="text-sm sm:text-base text-gray-600">{friends.length} friends following your journey</p>
-                </div>
-                <button 
-                  onClick={() => setShowFollowersModal(false)}
-                  className="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100 transition-colors"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
+        <div className="fixed inset-0 bg-violet-50 backdrop-blur-md flex items-center justify-center z-50 p-4">
+  <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden border border-violet-100">
+    {/* Header with solid violet background */}
+    <div className="p-8 bg-violet-500">
+      <div className="flex justify-between items-center text-white">
+        <div>
+          <h3 className="text-3xl font-bold mb-2">My Friends</h3>
+          <p className="text-lg text-white text-opacity-90">{friends.length} friends following your journey</p>
+        </div>
+        <button 
+          onClick={() => setShowFollowersModal(false)}
+          className="text-white hover:bg-white hover:bg-opacity-20 p-3 rounded-full transition-all duration-300"
+        >
+          <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <div className="p-6 bg-white overflow-y-auto max-h-96 custom-scrollbar">
+      {friends.length === 0 ? (
+        <div className="text-center py-16">
+          <div className="relative mb-8">
+            <div className="w-24 h-24 mx-auto bg-violet-100 rounded-2xl flex items-center justify-center border-2 border-violet-200">
+              <svg className="w-12 h-12 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
             </div>
-            
-            <div className="p-4 sm:p-6 overflow-y-auto max-h-96">
-              {friends.length === 0 ? (
-                <div className="text-center py-8 sm:py-12">
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: '#f6f7fb' }}>
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl" style={{ backgroundColor: '#7e3ff2' }}></div>
-                  </div>
-                  <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">No friends yet</h4>
-                  <p className="text-sm sm:text-base text-gray-600 mb-6">Start connecting with other habit builders!</p>
-                  <button
-                    onClick={() => {
-                      setShowFollowersModal(false);
-                      setShowAddFriendsModal(true);
-                    }}
-                    className="px-4 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-semibold text-white transition-colors text-sm sm:text-base"
-                    style={{ backgroundColor: '#7e3ff2' }}
-                  >
-                    Find Friends
-                  </button>
-                </div>
-              ) : (
-                <div className="grid gap-3 sm:gap-4">
-                  {friends.map(friend => (
-                    <div key={friend._id} className="flex items-center justify-between p-3 sm:p-4 rounded-xl sm:rounded-2xl border hover:border-gray-300 transition-colors" style={{ backgroundColor: '#f6f7fb' }}>
-                      <div className="flex items-center space-x-3 sm:space-x-4">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center text-white font-bold text-base sm:text-lg" style={{ backgroundColor: '#7e3ff2' }}>
-                          {friend.username.charAt(0).toUpperCase()}
-                        </div>
-                        <div>
-                          <h4 className="font-bold text-gray-900 text-base sm:text-lg">{friend.username}</h4>
-                          <p className="text-gray-600 text-xs sm:text-sm">{friend.email}</p>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => handleUnfollowUser(friend._id)}
-                        disabled={actionLoading[friend._id]}
-                        className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs sm:text-sm font-medium text-white transition-colors"
-                        style={{ backgroundColor: '#e04e4e' }}
-                      >
-                        {actionLoading[friend._id] ? 'Removing...' : 'Unfollow'}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
+            <div className="absolute top-4 left-1/2 transform -translate-x-8">
+              <div className="w-3 h-3 bg-violet-400 rounded-full"></div>
+            </div>
+            <div className="absolute top-8 right-1/2 transform translate-x-8">
+              <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
             </div>
           </div>
+          <h4 className="text-2xl font-bold text-violet-800 mb-3">No friends yet</h4>
+          <p className="text-lg text-violet-600 mb-8 max-w-md mx-auto">Start connecting with other habit builders!</p>
+          <button
+            onClick={() => {
+              setShowFollowersModal(false);
+              setShowAddFriendsModal(true);
+            }}
+            className="px-8 py-3 rounded-xl font-bold text-white transition-colors bg-violet-500 hover:bg-violet-600"
+          >
+            Find Friends
+          </button>
         </div>
+      ) : (
+        <div className="grid gap-4">
+          {friends.map(friend => {
+            // Simple solid colors for avatars
+            const photoColors = [
+              'bg-violet-400',
+              'bg-indigo-400',
+              'bg-purple-400',
+              'bg-fuchsia-400',
+              'bg-pink-400',
+              'bg-blue-400'
+            ];
+            const randomColor = photoColors[Math.abs(friend._id.charCodeAt(0)) % photoColors.length];
+            
+            return (
+              <div key={friend._id} className="group bg-white rounded-2xl border-2 border-violet-100 hover:border-violet-300 hover:shadow-xl transition-all duration-300 overflow-hidden">
+                <div className="flex items-center p-6">
+                  {/* Simple avatar */}
+                  <div className="relative mr-6">
+                    <div className={`w-20 h-20 rounded-2xl ${randomColor} flex items-center justify-center shadow-lg`}>
+                      <span className="text-white font-bold text-2xl">
+                        {friend.username.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-violet-400 border-3 border-white rounded-full"></div>
+                  </div>
+                  
+                  {/* User info */}
+                  <div className="flex-1">
+                    <h4 className="text-xl font-bold text-gray-900 mb-1 group-hover:text-violet-600 transition-colors">
+                      {friend.username}
+                    </h4>
+                    <p className="text-violet-500 text-base mb-2">{friend.email}</p>
+                    
+                    {/* Simple decorative elements */}
+                    <div className="flex space-x-1 mt-2">
+                      <div className="w-2 h-2 bg-violet-300 rounded-full opacity-60"></div>
+                      <div className="w-2 h-2 bg-purple-300 rounded-full opacity-40"></div>
+                      <div className="w-2 h-2 bg-fuchsia-300 rounded-full opacity-50"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Unfollow button */}
+                  <button
+                    onClick={() => handleUnfollowUser(friend._id)}
+                    disabled={actionLoading[friend._id]}
+                    className="px-8 py-3 rounded-xl font-bold transition-colors disabled:opacity-50 bg-red-500 hover:bg-red-600 text-white"
+                  >
+                    {actionLoading[friend._id] ? 'Removing...' : 'Unfollow'}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  </div>
+</div>
+
       )}
       
       {showAddFriendsModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden">
-            <div className="p-6 sm:p-8 border-b border-gray-100" style={{ backgroundColor: '#f6f7fb' }}>
-              <div className="flex justify-between items-center">
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Find Friends</h3>
-                  <p className="text-sm sm:text-base text-gray-600">Connect with other habit builders</p>
-                </div>
-                <button 
-                  onClick={() => {
-                    setShowAddFriendsModal(false);
-                    setSearchQuery('');
-                    setSearchResults([]);
-                  }}
-                  className="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100 transition-colors"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-            
-            <div className="p-4 sm:p-6">
-              <div className="mb-6">
-                <input
-                  type="text"
-                  placeholder="Search by username or email..."
-                  value={searchQuery}
-                  onChange={handleSearch}
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 border border-gray-200 rounded-xl sm:rounded-2xl focus:ring-2 transition-colors text-sm sm:text-base"
-                  style={{ focusRingColor: '#7e3ff2' }}
-                />
-              </div>
-
-              <div className="overflow-y-auto max-h-96">
-                {searchLoading && (
-                  <div className="text-center py-8">
-                    <div className="animate-spin rounded-full h-6 w-6 sm:h-8 sm:w-8 border-b-2 mx-auto mb-4" style={{ borderColor: '#7e3ff2' }}></div>
-                    <p className="text-sm sm:text-base text-gray-600">Searching for friends...</p>
-                  </div>
-                )}
-
-                {searchResults.length > 0 ? (
-                  <div className="grid gap-3 sm:gap-4">
-                    {searchResults.map(searchUser => {
-                      const isAlreadyFriend = isUserAlreadyFriend(searchUser._id);
-                      const isLoading = actionLoading[searchUser._id];
-                      
-                      return (
-                        <div key={searchUser._id} className="flex items-center justify-between p-3 sm:p-4 rounded-xl sm:rounded-2xl border hover:border-gray-300 transition-colors" style={{ backgroundColor: '#f6f7fb' }}>
-                          <div className="flex items-center space-x-3 sm:space-x-4">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center text-white font-bold text-base sm:text-lg" style={{ backgroundColor: '#7e3ff2' }}>
-                              {searchUser.username.charAt(0).toUpperCase()}
-                            </div>
-                            <div>
-                              <h4 className="font-bold text-gray-900 text-base sm:text-lg">{searchUser.username}</h4>
-                              <p className="text-gray-600 text-xs sm:text-sm">{searchUser.email}</p>
-                              {isAlreadyFriend && (
-                                <span className="text-xs font-medium" style={{ color: '#3ad2ff' }}>Already following</span>
-                              )}
-                            </div>
-                          </div>
-                          
-                          <button
-                            onClick={() => isAlreadyFriend ? handleUnfollowUser(searchUser._id) : handleFollowUser(searchUser._id)}
-                            disabled={isLoading}
-                            className={`px-4 sm:px-6 py-1.5 sm:py-2 rounded-lg sm:rounded-xl font-semibold transition-colors disabled:opacity-50 text-xs sm:text-sm ${
-                              isAlreadyFriend 
-                                ? 'text-white'
-                                : 'text-white'
-                            }`}
-                            style={{ 
-                              backgroundColor: isAlreadyFriend ? '#e04e4e' : '#7e3ff2'
-                            }}
-                          >
-                            {isLoading ? 'Loading...' : (isAlreadyFriend ? 'Unfollow' : 'Follow')}
-                          </button>
-                        </div>
-                      );
-                    })}
-                  </div>
-                ) : searchQuery && !searchLoading ? (
-                  <div className="text-center py-8 sm:py-12">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: '#f6f7fb' }}>
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl" style={{ backgroundColor: '#7e3ff2' }}></div>
-                    </div>
-                    <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">No users found</h4>
-                    <p className="text-sm sm:text-base text-gray-600">Try searching with different keywords.</p>
-                  </div>
-                ) : !searchQuery ? (
-                  <div className="text-center py-8 sm:py-12 text-gray-500">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ backgroundColor: '#f6f7fb' }}>
-                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gray-300"></div>
-                    </div>
-                    <p className="text-base sm:text-lg">Start typing to search for friends...</p>
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          </div>
+        <div className="fixed inset-0 bg-violet-50 backdrop-blur-md flex items-center justify-center z-50 p-4">
+  <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-hidden relative border border-violet-100">
+    {/* Header with solid background */}
+    <div className="relative p-8 bg-violet-500">
+      <div className="relative z-10 flex justify-between items-center text-white">
+        <div>
+          <h3 className="text-3xl font-bold mb-2">Discover People</h3>
+          <p className="text-lg text-white text-opacity-90">Build your habit community</p>
         </div>
+        <button 
+          onClick={() => {
+            setShowAddFriendsModal(false);
+            setSearchQuery('');
+            setSearchResults([]);
+          }}
+          className="text-white hover:bg-white hover:bg-opacity-20 p-3 rounded-full transition-all duration-300"
+        >
+          <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <div className="p-6 bg-white">
+      {/* Search bar */}
+      <div className="mb-8 relative">
+        <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+          <svg className="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <input
+          type="text"
+          placeholder="Search by username or email..."
+          value={searchQuery}
+          onChange={handleSearch}
+          className="w-full pl-12 pr-6 py-4 border-2 border-violet-200 rounded-2xl focus:ring-4 focus:ring-violet-100 focus:border-violet-400 transition-all duration-300 text-lg bg-violet-25 hover:bg-white"
+        />
+      </div>
+
+      <div className="overflow-y-auto max-h-96 custom-scrollbar">
+        {searchLoading && (
+          <div className="text-center py-16">
+            <p className="text-lg text-violet-700 font-medium">Finding amazing people...</p>
+          </div>
+        )}
+
+        {searchResults.length > 0 ? (
+          <div className="grid gap-4">
+            {searchResults.map(searchUser => {
+              const isAlreadyFriend = isUserAlreadyFriend(searchUser._id);
+              const isLoading = actionLoading[searchUser._id];
+              
+              // Simple solid colors instead of gradients
+              const photoColors = [
+                'bg-violet-400',
+                'bg-indigo-400',
+                'bg-purple-400',
+                'bg-fuchsia-400',
+                'bg-pink-400',
+                'bg-blue-400'
+              ];
+              const randomColor = photoColors[Math.abs(searchUser._id.charCodeAt(0)) % photoColors.length];
+              
+              return (
+                <div key={searchUser._id} className="group bg-white rounded-2xl border-2 border-violet-100 hover:border-violet-300 hover:shadow-xl transition-all duration-300 overflow-hidden">
+                  <div className="flex items-center p-6">
+                    {/* Simple avatar */}
+                    <div className="relative mr-6">
+                      <div className={`w-20 h-20 rounded-2xl ${randomColor} flex items-center justify-center shadow-lg`}>
+                        <span className="text-white font-bold text-2xl">
+                          {searchUser.username.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-violet-400 border-3 border-white rounded-full"></div>
+                    </div>
+                    
+                    {/* User info */}
+                    <div className="flex-1">
+                      <h4 className="text-xl font-bold text-gray-900 mb-1 group-hover:text-violet-600 transition-colors">
+                        {searchUser.username}
+                      </h4>
+                      <p className="text-violet-500 text-base mb-2">{searchUser.email}</p>
+                      
+                      {isAlreadyFriend && (
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2 h-2 bg-violet-400 rounded-full"></div>
+                          <span className="text-sm font-semibold text-violet-600">Following</span>
+                        </div>
+                      )}
+                      
+                      {/* Simple decorative elements */}
+                      <div className="flex space-x-1 mt-2">
+                        <div className="w-2 h-2 bg-violet-300 rounded-full opacity-60"></div>
+                        <div className="w-2 h-2 bg-purple-300 rounded-full opacity-40"></div>
+                        <div className="w-2 h-2 bg-fuchsia-300 rounded-full opacity-50"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Simple action button */}
+                    <button
+                      onClick={() => isAlreadyFriend ? handleUnfollowUser(searchUser._id) : handleFollowUser(searchUser._id)}
+                      disabled={isLoading}
+                      className={`px-8 py-3 rounded-xl font-bold transition-colors disabled:opacity-50 ${
+                        isAlreadyFriend 
+                          ? 'bg-red-500 hover:bg-red-600 text-white'
+                          : 'bg-violet-500 hover:bg-violet-600 text-white'
+                      }`}
+                    >
+                      {isLoading ? 'Loading...' : (isAlreadyFriend ? 'Unfollow' : 'Follow')}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : searchQuery && !searchLoading ? (
+          <div className="text-center py-16">
+            <div className="relative mb-8">
+              <div className="w-24 h-24 mx-auto bg-violet-200 rounded-2xl flex items-center justify-center">
+                <svg className="w-12 h-12 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
+                <div className="w-4 h-4 bg-fuchsia-400 rounded-full opacity-60"></div>
+              </div>
+            </div>
+            <h4 className="text-2xl font-bold text-violet-800 mb-3">No matches found</h4>
+            <p className="text-lg text-violet-600 max-w-sm mx-auto">Try different keywords to discover new habit builders in your community.</p>
+          </div>
+        ) : !searchQuery ? (
+          <div className="text-center py-16">
+            <div className="relative mb-8">
+              <div className="w-24 h-24 mx-auto bg-violet-100 rounded-2xl flex items-center justify-center border-2 border-violet-200">
+                <svg className="w-12 h-12 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <div className="absolute top-4 left-1/2 transform -translate-x-8">
+                <div className="w-3 h-3 bg-violet-400 rounded-full"></div>
+              </div>
+              <div className="absolute top-8 right-1/2 transform translate-x-8">
+                <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+              </div>
+            </div>
+            <h4 className="text-2xl font-bold text-violet-800 mb-3">Discover Your Community</h4>
+            <p className="text-lg text-violet-600 max-w-md mx-auto">Start typing to find people who share your passion for building better habits.</p>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  </div>
+</div>
+
       )}
       
       {showAddForm && (
@@ -652,7 +761,6 @@ export default function Dashboard() {
   );
 }
 
-// Habit Card 
 function ModernHabitCard({ habit, onToggle, onDelete }) {
   const [loading, setLoading] = useState(false);
 
@@ -677,7 +785,7 @@ function ModernHabitCard({ habit, onToggle, onDelete }) {
     style={habit.completedToday ? { ringColor: '#3ad2ff' } : {}}
     >
       
-      {/* Header */}
+      
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1 min-w-0">
           <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2 truncate">{habit.name}</h3>
@@ -702,7 +810,7 @@ function ModernHabitCard({ habit, onToggle, onDelete }) {
         </button>
       </div>
 
-      {/* Stats */}
+      
       <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-6">
         <div className="text-center p-2 sm:p-3 rounded-xl sm:rounded-2xl" style={{ backgroundColor: '#f6f7fb' }}>
           <div className="text-sm sm:text-lg font-bold" style={{ color: '#7e3ff2' }}>{habit.currentStreak || 0}</div>
@@ -718,7 +826,7 @@ function ModernHabitCard({ habit, onToggle, onDelete }) {
         </div>
       </div>
 
-      {/* Action Button */}
+      
       {habit.completedToday ? (
         <div className="flex items-center justify-center py-2.5 sm:py-3 px-4 rounded-xl sm:rounded-2xl text-white font-semibold text-sm sm:text-base" style={{ backgroundColor: '#3ad2ff' }}>
           <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -752,7 +860,6 @@ function ModernHabitCard({ habit, onToggle, onDelete }) {
   );
 }
 
-// Add Habit Form 
 function ModernAddHabitForm({ onAdd, onCancel }) {
   const [formData, setFormData] = useState({
     name: '',
@@ -767,7 +874,6 @@ function ModernAddHabitForm({ onAdd, onCancel }) {
     { value: 'fitness', label: 'Fitness' },
     { value: 'productivity', label: 'Productivity' },
     { value: 'learning', label: 'Learning' },
-    { value: 'mindfulness', label: 'Mindfulness' },
     { value: 'other', label: 'Other' }
   ];
 

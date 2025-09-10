@@ -1,4 +1,4 @@
-// controllers/habitController.js
+
 import Habit from '../models/Habit.js';
 import HabitCompletion from '../models/HabitCompletion.js';
 

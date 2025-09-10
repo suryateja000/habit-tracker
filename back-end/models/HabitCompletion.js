@@ -1,4 +1,4 @@
-// models/HabitCompletion.js
+
 import mongoose from 'mongoose';
 
 const habitCompletionSchema = new mongoose.Schema({
@@ -13,19 +13,19 @@ const habitCompletionSchema = new mongoose.Schema({
     required: true
   },
   date: {
-    type: String, // Store as YYYY-MM-DD format
+    type: String, 
     required: true
   },
   completed: {
     type: Boolean,
     default: true
   }
-  // Remove the 'status' field since we're using 'completed' instead
+
 }, {
   timestamps: true
 });
 
-// Compound unique index: one completion per habit per day
+
 habitCompletionSchema.index({ habitId: 1, date: 1 }, { unique: true });
 
 export default mongoose.model('HabitCompletion', habitCompletionSchema);

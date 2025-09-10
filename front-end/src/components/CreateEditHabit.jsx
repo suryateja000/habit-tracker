@@ -129,11 +129,11 @@ export default function CreateEditHabit() {
                 value={formData.category}
                 onChange={handleChange}
               >
-                <option value="health">🏥 Health</option>
-                <option value="fitness">💪 Fitness</option>
-                <option value="productivity">💼 Productivity</option>
-                <option value="learning">📚 Learning</option>
-                <option value="other">🎯 Other</option>
+                <option value="health">Health</option>
+                <option value="fitness"> Fitness</option>
+                <option value="productivity"> Productivity</option>
+                <option value="learning"> Learning</option>
+                <option value="other"> Other</option>
               </select>
             </div>
 

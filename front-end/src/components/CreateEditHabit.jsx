@@ -1,4 +1,3 @@
-// src/components/CreateEditHabit.jsx
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { createHabit, updateHabit, getHabits } from '../Api'

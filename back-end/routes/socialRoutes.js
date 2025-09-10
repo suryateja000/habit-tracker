@@ -1,4 +1,4 @@
-// routes/socialRoutes.js - Fixed imports
+
 import express from 'express';
 import {
   searchUsers,
@@ -6,7 +6,7 @@ import {
   unfollowUser,
   getFriends,
   getFriendsActivity,
-  getUserProfile  // ← This should be getUserProfile, not getFriendProfile
+  getUserProfile  
 } from '../controllers/socialController.js';
 import { protect } from '../middleware/auth.js';
 
@@ -19,6 +19,6 @@ router.post('/follow', sendFollowRequest);
 router.post('/unfollow', unfollowUser);
 router.get('/friends', getFriends);
 router.get('/activity', getFriendsActivity);
-router.get('/profile/:userId', getUserProfile); // ← Using getUserProfile
+router.get('/profile/:userId', getUserProfile); 
 
 export default router;

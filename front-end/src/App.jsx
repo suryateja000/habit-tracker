@@ -1,4 +1,4 @@
-// src/App.jsx - Updated with simple landing page
+// src/App.jsx
 
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
@@ -32,7 +32,6 @@ function PublicRoute({ children }) {
 export default function App() {
   return (
     <Routes>
-      {/* Public Routes */}
       <Route 
         path="/login" 
         element={
@@ -58,7 +57,7 @@ export default function App() {
         } 
       />
 
-      {/* Protected Routes */}
+      
       <Route 
         path="/dashboard" 
         element={
@@ -108,7 +107,7 @@ export default function App() {
         } 
       />
 
-      {/* Default Routes */}
+      
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   )

@@ -1,4 +1,4 @@
-// models/Habit.js
+
 import mongoose from 'mongoose';
 
 const habitSchema = new mongoose.Schema({
@@ -39,7 +39,7 @@ const habitSchema = new mongoose.Schema({
   timestamps: true
 });
 
-// Compound unique index: one user can't have duplicate habit names
+
 habitSchema.index({ userId: 1, name: 1 }, { unique: true });
 
 export default mongoose.model('Habit', habitSchema);

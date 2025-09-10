@@ -1,4 +1,4 @@
-// src/components/Register.jsx
+
 import React, { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useNavigate, Link } from 'react-router-dom'
@@ -82,23 +82,23 @@ export default function Register() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-violet-50 to-purple-50 flex items-center justify-center p-4">
-      {/* Background Decorative Elements */}
+      
       <div className="absolute top-20 right-20 w-24 h-24 bg-gradient-to-br from-purple-200 to-pink-300 rounded-full opacity-50 animate-pulse hidden lg:block"></div>
       <div className="absolute bottom-40 left-16 w-18 h-18 bg-gradient-to-br from-emerald-200 to-teal-300 rounded-full opacity-60 animate-bounce"></div>
       <div className="absolute top-1/4 left-8 w-14 h-14 bg-gradient-to-br from-amber-200 to-orange-300 rounded-full opacity-40 animate-pulse"></div>
       
-      {/* Main Register Container */}
+      
       <div className="w-full max-w-lg relative z-10">
-        {/* Header */}
+        
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-slate-800 mb-2">Create Account</h1>
           <p className="text-slate-600">Start your habit-building journey today</p>
         </div>
 
-        {/* Register Card */}
+        
         <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/50 p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Username Field */}
+            
             <div className="space-y-2">
               <label htmlFor="username" className="block text-sm font-semibold text-slate-700">
                 Username
@@ -121,7 +121,7 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Email Field */}
+            
             <div className="space-y-2">
               <label htmlFor="email" className="block text-sm font-semibold text-slate-700">
                 Email Address
@@ -144,7 +144,7 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Password Field */}
+            
             <div className="space-y-2">
               <label htmlFor="password" className="block text-sm font-semibold text-slate-700">
                 Password
@@ -183,7 +183,7 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Confirm Password Field */}
+          
             <div className="space-y-2">
               <label htmlFor="confirmPassword" className="block text-sm font-semibold text-slate-700">
                 Confirm Password
@@ -222,7 +222,7 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Error Message */}
+            
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center space-x-3">
                 <svg className="h-5 w-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -232,7 +232,7 @@ export default function Register() {
               </div>
             )}
 
-            {/* Submit Button */}
+            
             <button
               type="submit"
               disabled={loading}
@@ -257,7 +257,7 @@ export default function Register() {
             </button>
           </form>
 
-          {/* Footer */}
+          
           <div className="mt-8 text-center">
             <p className="text-slate-600">
               Already have an account?{' '}
@@ -271,7 +271,7 @@ export default function Register() {
           </div>
         </div>
 
-        {/* Back to Home */}
+        
         <div className="text-center mt-6">
           <Link 
             to="/" 

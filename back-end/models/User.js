@@ -1,4 +1,4 @@
-// models/User.js
+
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     ref: 'User'
   }]
 }, {
-  timestamps: true // adds createdAt and updatedAt
+  timestamps: true 
 });
 
 export default mongoose.model('User', userSchema);
